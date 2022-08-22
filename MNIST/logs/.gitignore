@@ -1,0 +1,3 @@
+output_conv_train*.npy
+output_pool_train*.npy
+weights_*.npy

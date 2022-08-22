@@ -1,0 +1,1 @@
+See https://pypi.org/project/python-mnist/ to download the dataset.
