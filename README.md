@@ -27,10 +27,6 @@ python3 snn.py
 
 Several other functions are available in the file `snn.py` (and also `snn_analysis.py` for `MNIST`) to reproduce experiments presented in the paper. 
 
-## About TIDIGITS
-
-Note that TIDIGITS dataset is not provided. You must extract the content of the directory "adults" from the original dataset to a new directory of path `./dataset`. Also, we defined and used a specific order to load sound files for reproducibility purpose, samples are then shuffled randomly with a seed.
-
 ## Acknowledgements
 
 - Institut Interdisciplinaire d'Innovation Technologique (3IT), Université de Sherbrooke.
