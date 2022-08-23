@@ -6,7 +6,7 @@ This is the code for the paper *TITLE*.
 
 ### Dependencies
 - tqdm
-- mnist
+- python-mnist
 - numpy
 - librosa
 - scikit_learn
