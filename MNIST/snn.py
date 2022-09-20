@@ -12,23 +12,23 @@ from utils import DebugPrint, spike_to_time, load_encoded_MNIST
 
 
 """
-Adaptation of the paper STDP-based spiking deep neural networks for object recognition,
-with Voltage-Dependent Synaptic Plasticity (VDSP) learning rule,
+Convolutional spiking neural network with voltage-dependent synaptic plasticity (VDSP),
 for handwritten digits recognition task.
 
-References:
+Adapted from the following references:
 
-       [1] Kheradpisheh, S.R., et al. STDP-based spiking deep neural networks for object recognition.
-           arXiv:1611.01421v1 (Nov, 2016)
+       [1] Kheradpisheh, S.R., et al. (2018). STDP-based spiking deep neural networks for object recognition.
+           Neural Networks. (https://doi.org/10.1016/j.neunet.2017.12.005).
 
        [2] Mozafari, M., Ganjtabesh, M., Nowzari-Dalini, A., & Masquelier, T. (2019). SpykeTorch: Efficient
            Simulation of Convolutional Spiking Neural Networks With at Most One Spike per Neuron. Frontiers
            in Neuroscience (https://doi.org/10.3389/fnins.2019.00625).
- 
-       [3] https://github.com/npvoid/SDNN_python
 
-       [4] Nikhil Garg, Ismael Balafrej, et al. Voltage-Dependent Synaptic Plasticity (VDSP): Unsupervised
-           probabilistic Hebbian plasticity rule based on neurons membrane potential. arXiv:2203.11022
+       [3] Nikhil Garg, Ismael Balafrej, et al. (2022). Voltage-Dependent Synaptic Plasticity (VDSP): 
+           Unsupervised probabilistic Hebbian plasticity rule based on neurons membrane potential.
+           Frontiers in Neuroscience (https://doi.org/10.3389/fnins.2022.983950).
+           
+       [4] https://github.com/npvoid/SDNN_python
 """
 
 
