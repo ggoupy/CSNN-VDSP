@@ -1,4 +1,4 @@
-# CSNN with VDSP
+# Convolutional SNN with VDSP
 
 This is the code for the paper *Unsupervised and efficient learning in sparsely activated convolutional spiking neural networks enabled by voltage-dependent synaptic plasticity*.
 
