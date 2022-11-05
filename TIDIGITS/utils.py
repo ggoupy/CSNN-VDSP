@@ -73,7 +73,7 @@ def spike_encoding(x, nb_timesteps=15, trash_bins=0):
 
 
 
-def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, dataset_dir="dataset/"):
+def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, trim=True, sample_size=SAMPLE_SIZE, dataset_dir="dataset/"):
     """
     Load and preprocess TIDIGITS dataset.
 
@@ -103,9 +103,12 @@ def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, dataset_dir="
         # Load sample
         sample, _ = librosa.load(dataset_dir + f, sr=SAMPLE_RATE)
         # Cut silence
-        sample = librosa.effects.trim(sample, top_db=20)[0]
+        if trim:
+            sample = librosa.effects.trim(sample, top_db=20)[0]
+        # Remove the end of the sample if it is too long
+        if len(sample) > sample_size: sample = sample[0:sample_size]
         # Padding to ensure samples have the same size
-        if len(sample) < SAMPLE_SIZE: sample = np.pad(sample, ((0,SAMPLE_SIZE-len(sample))), mode='constant')
+        if len(sample) < sample_size: sample = np.pad(sample, ((0,sample_size-len(sample))), mode='constant')
         # Convert sample into log melspectrogram
         sample = mfsc(sample).T
         # Encode into spike trains
@@ -120,7 +123,7 @@ def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, dataset_dir="
 
 
 
-def load_TIDIGITS(test_size=0.3, seed=42, dataset_dir="dataset/"):
+def load_TIDIGITS(test_size=0.3, seed=42, trim=True, sample_size=SAMPLE_SIZE, dataset_dir="dataset/"):
     """
     Load and preprocess TIDIGITS dataset, without spike encoding.
 
@@ -150,9 +153,12 @@ def load_TIDIGITS(test_size=0.3, seed=42, dataset_dir="dataset/"):
         # Load sample
         sample, _ = librosa.load(dataset_dir + f, sr=SAMPLE_RATE)
         # Cut silence
-        sample = librosa.effects.trim(sample, top_db=20)[0]
+        if trim:
+            sample = librosa.effects.trim(sample, top_db=20)[0]
+        # Remove the end of the sample if it is too long
+        if len(sample) > sample_size: sample = sample[0:sample_size]
         # Padding to ensure samples have the same size
-        if len(sample) < SAMPLE_SIZE: sample = np.pad(sample, ((0,SAMPLE_SIZE-len(sample))), mode='constant')
+        if len(sample) < sample_size: sample = np.pad(sample, ((0,sample_size-len(sample))), mode='constant')
         # Convert sample into log melspectrogram
         sample = mfsc(sample).T
         X.append(sample)

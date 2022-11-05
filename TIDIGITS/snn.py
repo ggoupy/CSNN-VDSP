@@ -438,7 +438,8 @@ def main(
     torch.backends.cudnn.deterministic = True
 
     # Load dataset encoded as spikes with a temporal coding
-    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed)
+    #X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed)
+    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed, trim=False, sample_size=18000)
 
     # Init SNN
     input_shape = X_train[0][0].shape
@@ -627,5 +628,6 @@ def acc_vs_vdsp_factor(N=5, init_seed=5): ### N=10, init_seed=0
 
 
 if __name__ == "__main__":
-    acc_vs_vdsp_factor()
+    mean_acc()
+    #acc_vs_vdsp_factor()
     #acc_vs_lr()
