@@ -208,7 +208,7 @@ class SpikingConv:
         cond_dep = conv >= self.v_rest # has not fired recently
         # Normalize potential between 0 and 1
         g_pot = self.vdsp_pot_factor
-        g_dep = 1#self.vdsp_dep_factor - conv/self.firing_threshold
+        g_dep = self.vdsp_dep_factor - conv/self.firing_threshold
         dW = (cond_pot * w * g_pot * self.vdsp_lr) - (cond_dep * w * g_dep * self.vdsp_lr)
         self.weights[winner_c] += dW.reshape(self.weights[winner_c].shape)
         # Make sure weights are in the range [w_min , w_max]
@@ -627,5 +627,4 @@ def acc_vs_vdsp_factor(N=10, init_seed=0):
 
 
 if __name__ == "__main__":
-    #main()
-    mean_acc(N=5, init_seed=5)
+    main()
