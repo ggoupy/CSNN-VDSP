@@ -13,7 +13,7 @@ def main(seed=0):
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
 
-    X_train, X_test, y_train, y_test = load_MNIST(seed=seed)
+    X_train, X_test, y_train, y_test = load_MNIST()
     X_train = X_train.reshape(-1, 28*28)
     X_test = X_test.reshape(-1, 28*28)
     
