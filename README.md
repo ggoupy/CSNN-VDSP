@@ -4,19 +4,25 @@ This is the code for the paper *Unsupervised and efficient learning in sparsely 
 
 ## Getting started
 
+The code was written in Python 3.9.
+
 ### Dependencies
-- tqdm
-- python-mnist
-- numpy
-- librosa
-- scikit_learn
-- torch 
+- tqdm (4.64.0)
+- numpy (1.20.1)
+- librosa (0.9.2)
+- scikit_learn (1.1.2)
+- torch (1.12.1)
+- python-mnist (0.7)
+
+Please be aware that, even if other versions of the dependencies can be used, this may prevent reproducibility. 
 
 ### Installation
 Dependencies for each subdirectory can be installed with : 
 ```
 pip3 install -r requirements.txt
 ```
+  
+Also, the library *libsndfile* must be installed. (`dnf install libsndfile` on fedora, `apt install libsndfile1` on ubuntu).
 
 ## Usage
 

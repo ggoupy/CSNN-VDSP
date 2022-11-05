@@ -627,6 +627,5 @@ def acc_vs_vdsp_factor(N=5, init_seed=5): ### N=10, init_seed=0
 
 
 if __name__ == "__main__":
-    #main()
     acc_vs_vdsp_factor()
     #acc_vs_lr()
