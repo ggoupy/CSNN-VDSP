@@ -7,7 +7,7 @@ from utils import load_TIDIGITS
 
 
 
-def main(seed=0, trim=False):
+def main(seed=0, trim=True):
 
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)

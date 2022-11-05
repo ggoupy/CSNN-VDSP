@@ -208,7 +208,7 @@ class SpikingConv:
         cond_dep = conv >= self.v_rest # has not fired recently
         # Normalize potential between 0 and 1
         g_pot = self.vdsp_pot_factor
-        g_dep = self.vdsp_dep_factor - conv/self.firing_threshold
+        g_dep = 1#self.vdsp_dep_factor - conv/self.firing_threshold
         dW = (cond_pot * w * g_pot * self.vdsp_lr) - (cond_dep * w * g_dep * self.vdsp_lr)
         self.weights[winner_c] += dW.reshape(self.weights[winner_c].shape)
         # Make sure weights are in the range [w_min , w_max]
@@ -438,8 +438,7 @@ def main(
     torch.backends.cudnn.deterministic = True
 
     # Load dataset encoded as spikes with a temporal coding
-    #X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed)
-    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed, trim=False, sample_size=18000)
+    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed)
 
     # Init SNN
     input_shape = X_train[0][0].shape
@@ -572,7 +571,7 @@ def acc_vs_pooling(N=10, init_seed=0):
     print(output)
 
 
-def acc_vs_lr(N=5, init_seed=5, lr=0.01, adaptive=True, save_weights=False):  ### N=10, init_seed=0
+def acc_vs_lr(N=10, init_seed=0, lr=0.01, adaptive=True, save_weights=False):
     output = {}
     snn_params = DEFAULT_NETWORK_PARAMS.copy()
     snn_params["conv_vdsp_lr"] = lr
@@ -611,7 +610,7 @@ def convergence_vs_vdsp_factor(N=10, init_seed=0):
     print(output) 
 
 
-def acc_vs_vdsp_factor(N=5, init_seed=5): ### N=10, init_seed=0
+def acc_vs_vdsp_factor(N=10, init_seed=0):
     output = {}
     for vdsp_dep_factor in [1+0.25*i for i in range(9)]:
         snn_params = DEFAULT_NETWORK_PARAMS.copy()
@@ -628,6 +627,5 @@ def acc_vs_vdsp_factor(N=5, init_seed=5): ### N=10, init_seed=0
 
 
 if __name__ == "__main__":
-    mean_acc()
-    #acc_vs_vdsp_factor()
-    #acc_vs_lr()
+    #main()
+    mean_acc(N=5, init_seed=5)
