@@ -16,8 +16,10 @@ def main(seed=0, trim=True):
     if trim:
         X_train, X_test, y_train, y_test = load_TIDIGITS(seed=seed)
         X_train = X_train.reshape(-1, 55*40)
+        X_test = X_test.reshape(-1, 55*40)
     else:
         X_train, X_test, y_train, y_test = load_TIDIGITS(seed=seed, trim=False, sample_size=18000)
+        X_train = X_train.reshape(-1, 71*40)
         X_test = X_test.reshape(-1, 71*40)
 
     clf = LinearSVC(random_state=seed, max_iter=10000, C=0.005)
