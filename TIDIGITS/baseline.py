@@ -32,7 +32,7 @@ def main(seed=0, trim=True):
 
 
 if __name__ == "__main__":
-    N = 5
+    N = 10
     init_seed = 0
     recorded_acc = np.zeros(N)
     for i,seed in enumerate(range(init_seed,init_seed+N)):

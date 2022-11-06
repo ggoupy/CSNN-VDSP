@@ -627,4 +627,4 @@ def acc_vs_vdsp_factor(N=10, init_seed=0):
 
 
 if __name__ == "__main__":
-    main()
+    mean_acc()
