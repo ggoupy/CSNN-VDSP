@@ -415,7 +415,7 @@ def gridsearch_readout(out_train, out_test, y_train, y_test, seed):
 
 
 def main(
-    seed=1,                            # To control the randomness
+    seed=0,                            # To control the randomness
     nb_timesteps=15,                   # Number of spike bins
     epochs=1,                          # Number of epochs per layer
     convergence_rate=0.01,             # Stop training when learning convergence reaches this rate
@@ -423,7 +423,7 @@ def main(
     save_weights=False,                # True to save weights after training
     snn_params=DEFAULT_NETWORK_PARAMS, # Parameters of the SNN
     return_nb_train_samples=False,     # Return the number of training samples used
-    extended_print=False               # Print all messages
+    extended_print=False,              # Print all messages
 ):
     # Custom printing
     printd = DebugPrint(extended_print)
