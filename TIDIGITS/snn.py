@@ -571,12 +571,12 @@ def acc_vs_pooling(N=10, init_seed=0):
     print(output)
 
 
-def acc_vs_lr(N=5, init_seed=0, lr=0.01, adaptive=True, save_weights=False):
+def acc_vs_lr(N=10, init_seed=0, lr=0.01, adaptive=True, save_weights=False):
     output = {}
     snn_params = DEFAULT_NETWORK_PARAMS.copy()
     snn_params["conv_vdsp_lr"] = lr
     snn_params["conv_adaptive_lr"] = adaptive
-    for max_train_samples in [0,10,25,50,75,100,150,200,250,300,500,750,1000,1500,2000]:
+    for max_train_samples in [0,10,50,100,150,200,250,300,500,1000,2000]:
         recorded_acc = np.zeros(N)
         for i,seed in enumerate(range(init_seed,init_seed+N)):
             save_w = False
@@ -596,7 +596,7 @@ def acc_vs_lr(N=5, init_seed=0, lr=0.01, adaptive=True, save_weights=False):
     print(output)
 
 
-def convergence_vs_vdsp_factor(N=5, init_seed=0):
+def convergence_vs_vdsp_factor(N=10, init_seed=0):
     output = {}
     for vdsp_dep_factor in [1+0.25*i for i in range(9)]:
         snn_params = DEFAULT_NETWORK_PARAMS.copy()
@@ -610,7 +610,7 @@ def convergence_vs_vdsp_factor(N=5, init_seed=0):
     print(output) 
 
 
-def acc_vs_vdsp_factor(N=5, init_seed=0):
+def acc_vs_vdsp_factor(N=10, init_seed=0):
     output = {}
     for vdsp_dep_factor in [1+0.25*i for i in range(9)]:
         snn_params = DEFAULT_NETWORK_PARAMS.copy()
@@ -627,4 +627,4 @@ def acc_vs_vdsp_factor(N=5, init_seed=0):
 
 
 if __name__ == "__main__":
-    main()
+    mean_acc()

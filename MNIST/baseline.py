@@ -13,7 +13,7 @@ def main(seed=0):
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
 
-    X_train, X_test, y_train, y_test = load_MNIST(seed=seed)
+    X_train, X_test, y_train, y_test = load_MNIST()
     X_train = X_train.reshape(-1, 28*28)
     X_test = X_test.reshape(-1, 28*28)
     
@@ -27,7 +27,7 @@ def main(seed=0):
 
 
 if __name__ == "__main__":
-    N = 5
+    N = 10
     init_seed = 0
     recorded_acc = np.zeros(N)
     for i,seed in enumerate(range(init_seed,init_seed+N)):
