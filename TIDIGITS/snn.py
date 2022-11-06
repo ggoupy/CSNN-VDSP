@@ -438,7 +438,7 @@ def main(
     torch.backends.cudnn.deterministic = True
 
     # Load dataset encoded as spikes with a temporal coding
-    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed)
+    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed, trim=False, sample_size=22000)
 
     # Init SNN
     input_shape = X_train[0][0].shape
