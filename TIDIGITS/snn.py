@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 from torch.nn.functional import conv2d, max_pool2d
 
-from utils import DebugPrint, spike_to_time, load_encoded_TIDIGITS
+from utils import DebugPrint, spike_to_time, load_encoded_TIDIGITS, load_encoded_TIDIGITS2
 
 
 """
@@ -438,7 +438,8 @@ def main(
     torch.backends.cudnn.deterministic = True
 
     # Load dataset encoded as spikes with a temporal coding
-    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed, trim=False, sample_size=22000)
+    #X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(nb_timesteps=nb_timesteps, seed=seed, trim=False, sample_size=22000)
+    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS2(nb_timesteps=nb_timesteps, seed=seed)
 
     # Init SNN
     input_shape = X_train[0][0].shape

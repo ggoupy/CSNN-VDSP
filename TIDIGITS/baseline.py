@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score
 
-from utils import load_TIDIGITS
+from utils import load_TIDIGITS, load_TIDIGITS2
 
 
 
@@ -18,9 +18,12 @@ def main(seed=0, trim=False):
         X_train = X_train.reshape(-1, 55*40)
         X_test = X_test.reshape(-1, 55*40)
     else:
-        X_train, X_test, y_train, y_test = load_TIDIGITS(seed=seed, trim=False, sample_size=22000)
-        X_train = X_train.reshape(-1, 86*40)
-        X_test = X_test.reshape(-1, 86*40)
+        #X_train, X_test, y_train, y_test = load_TIDIGITS(seed=seed, trim=False, sample_size=22000)
+        X_train, X_test, y_train, y_test = load_TIDIGITS2(seed=seed, mfsc_target_bins=60)
+        #X_train = X_train.reshape(-1, 86*40)
+        #X_test = X_test.reshape(-1, 86*40)
+        X_train = X_train.reshape(-1, 60*40)
+        X_test = X_test.reshape(-1, 60*40)
 
     clf = LinearSVC(random_state=seed, max_iter=10000, C=0.005)
     clf.fit(X_train, y_train)
