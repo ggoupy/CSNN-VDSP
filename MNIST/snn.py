@@ -528,4 +528,4 @@ def mean_acc(N=10, init_seed=0, with_training=True):
 
 
 if __name__ == "__main__":
-    main()
+    mean_acc()
