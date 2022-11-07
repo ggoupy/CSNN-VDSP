@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score
 
-from utils import load_TIDIGITS, load_TIDIGITS2
+from utils import load_encoded_TIDIGITS
 
 
 
@@ -13,18 +13,15 @@ def main(seed=0, trim=False):
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
 
-    if trim:
-        X_train, X_test, y_train, y_test = load_TIDIGITS(seed=seed)
-        X_train = X_train.reshape(-1, 55*40)
-        X_test = X_test.reshape(-1, 55*40)
-    else:
-        #X_train, X_test, y_train, y_test = load_TIDIGITS(seed=seed, trim=False, sample_size=22000)
-        X_train, X_test, y_train, y_test = load_TIDIGITS2(seed=seed, mfsc_target_bins=60)
-        #X_train = X_train.reshape(-1, 86*40)
-        #X_test = X_test.reshape(-1, 86*40)
-        X_train = X_train.reshape(-1, 60*40)
-        X_test = X_test.reshape(-1, 60*40)
+    # Load dataset without the spike encoding step
+    X_train, X_test, y_train, y_test = load_encoded_TIDIGITS(seed=seed, trim=trim, to_spike=False)
+    
+    # Resize to 2D vectors
+    output_size = 55*40 if trim else 60*40
+    X_train = X_train.reshape(-1, output_size)
+    X_test = X_test.reshape(-1, output_size)
 
+    # Readout
     clf = LinearSVC(random_state=seed, max_iter=10000, C=0.005)
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test)
