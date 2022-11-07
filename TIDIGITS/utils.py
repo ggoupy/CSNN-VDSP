@@ -5,10 +5,14 @@ import librosa
 from sklearn.model_selection import train_test_split
 
 
-
+# Resampling rate
 SAMPLE_RATE = 16000
-SAMPLE_SIZE = 13824 # longest sample size after resampling and trimming
-
+# If trimming, pad all samples to this size
+# Longest sample size after resampling and trimming
+SAMPLE_SIZE = 13824
+# If no trimming, adapt STFT hop length
+# to match this number of windows 
+MFSC_TARGET_WINS = 60
 
 
 
@@ -73,7 +77,7 @@ def spike_encoding(x, nb_timesteps=15, trash_bins=0):
 
 
 
-def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, trim=True, sample_size=SAMPLE_SIZE, dataset_dir="dataset/"):
+def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, trim=True, to_spike=True, dataset_dir="dataset/"):
     """
     Load and preprocess TIDIGITS dataset.
 
@@ -102,68 +106,28 @@ def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, trim=True, sa
         else: label = int(str_label)
         # Load sample
         sample, _ = librosa.load(dataset_dir + f, sr=SAMPLE_RATE)
-        # Cut silence
+        # Trimming step
         if trim:
+            # Cut silence
             sample = librosa.effects.trim(sample, top_db=20)[0]
-        # Remove the end of the sample if it is too long
-        if len(sample) > sample_size: sample = sample[0:sample_size]
-        # Padding to ensure samples have the same size
-        if len(sample) < sample_size: sample = np.pad(sample, ((0,sample_size-len(sample))), mode='constant')
-        # Convert sample into log melspectrogram
-        sample = mfsc(sample).T
-        # Encode into spike trains
-        encoded = spike_encoding(sample, nb_timesteps)
+            # Padding to ensure samples have the same size
+            if len(sample) < SAMPLE_SIZE: sample = np.pad(sample, ((0,SAMPLE_SIZE-len(sample))), mode='constant')
+            # Convert sample into log melspectrogram
+            sample = mfsc(sample).T
+        # No trimming
+        else:
+            # Adapt hop length to fix the size of spectrograms
+            hop_length=int(len(sample)/(MFSC_TARGET_WINS-1))
+            sample = mfsc(sample, hop_length=hop_length).T
+        if to_spike:
+            # Encode into spike trains
+            encoded = spike_encoding(sample, nb_timesteps)
         X.append(encoded)
         y.append(label)
-    X = np.array(X, dtype=np.uint8)
-    y = np.array(y)
-
-    return train_test_split(X, y, test_size=test_size, shuffle=True, random_state=seed)
-
-
-
-
-def load_TIDIGITS(test_size=0.3, seed=42, trim=True, sample_size=SAMPLE_SIZE, dataset_dir="dataset/"):
-    """
-    Load and preprocess TIDIGITS dataset, without spike encoding.
-
-    WARNING :
-    Only isolated digits from adult speakers are used for this experiment.
-    Hence, content of the directory "adults" from original TIDIGITS dataset
-    must be extracted to a new directory of path << ./dataset/ >>
-    """
-    
-    # Use a loading order as file loading is dependent of
-    # the machine and can prevent reproducibility.
-    # Dataset is shuffled after loading.
-    load_order = []
-    with open('TIDIGITS_load_order.txt') as f:
-        for line in f:
-            load_order.append(line)
-    files = [f.rstrip() for f in load_order]
-
-    X = []
-    y = []
-    for f in files:
-        # Convert to int label
-        str_label = f.split("/")[3][0]
-        if str_label == "o": label = -1
-        elif str_label == "z": label = 0
-        else: label = int(str_label)
-        # Load sample
-        sample, _ = librosa.load(dataset_dir + f, sr=SAMPLE_RATE)
-        # Cut silence
-        if trim:
-            sample = librosa.effects.trim(sample, top_db=20)[0]
-        # Remove the end of the sample if it is too long
-        if len(sample) > sample_size: sample = sample[0:sample_size]
-        # Padding to ensure samples have the same size
-        if len(sample) < sample_size: sample = np.pad(sample, ((0,sample_size-len(sample))), mode='constant')
-        # Convert sample into log melspectrogram
-        sample = mfsc(sample).T
-        X.append(sample)
-        y.append(label)
-    X = np.array(X)
+    if to_spike:
+        X = np.array(X, dtype=np.uint8)
+    else:
+        X = np.array(X)
     y = np.array(y)
 
     return train_test_split(X, y, test_size=test_size, shuffle=True, random_state=seed)
