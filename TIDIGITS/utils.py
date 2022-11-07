@@ -122,7 +122,9 @@ def load_encoded_TIDIGITS(nb_timesteps=15, test_size=0.3, seed=42, trim=True, to
         if to_spike:
             # Encode into spike trains
             encoded = spike_encoding(sample, nb_timesteps)
-        X.append(encoded)
+            X.append(encoded)
+        else:
+            X.append(sample)
         y.append(label)
     if to_spike:
         X = np.array(X, dtype=np.uint8)
