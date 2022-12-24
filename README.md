@@ -1,6 +1,6 @@
 # CSNN & VDSP
 
-This is the code for the paper *Unsupervised and efficient learning in sparsely activated convolutional spiking neural networks enabled by voltage-dependent synaptic plasticity*.
+This is the code for the paper *Unsupervised and efficient learning in sparsely activated convolutional spiking neural networks enabled by voltage-dependent synaptic plasticity*, available [here](https://iopscience.iop.org/article/10.1088/2634-4386/acad98).
 
 ## Getting started
 
@@ -13,8 +13,6 @@ The code was written in Python 3.9.
 - scikit_learn (1.1.2)
 - torch (1.12.1)
 - python-mnist (0.7)
-
-Please be aware that, even if other versions of the dependencies can be used, this may prevent reproducibility. 
 
 ### Installation
 Dependencies for each subdirectory can be installed with : 
